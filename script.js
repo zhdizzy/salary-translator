@@ -195,7 +195,7 @@ function attachListeners() {
         emailStatus.className = 'email-status';
 
         try {
-            const res = await fetch('/.netlify/functions/email-results', {
+            const res = await fetch('/api/email-results', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, resultsUrl: buildShareUrl() }),
