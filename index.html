@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Military to Civilian Salary Translator | The Better Veteran</title>
+    <meta name="description" content="Find out what civilian salary you need to match your military pay. Translates BAH, BAS, Tricare, TSP match, and tax advantages into the real number.">
+    <meta name="robots" content="index, follow">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <meta property="og:title" content="Military to Civilian Salary Translator | The Better Veteran">
+    <meta property="og:description" content="Translate your full military compensation — BAH, BAS, Tricare, TSP, and tax advantages — into the civilian salary equivalent.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tools.thebetterveteran.com/salary/">
+    <link rel="canonical" href="https://tools.thebetterveteran.com/salary/">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Military to Civilian Salary Translator",
+        "description": "Translates full military compensation — base pay, BAH, BAS, Tricare, TSP, and tax advantages — to the civilian salary equivalent.",
+        "url": "https://tools.thebetterveteran.com/salary/",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Organization", "name": "The Better Veteran", "url": "https://www.thebetterveteran.com/" }
+    }
+    </script>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header-container">
+        <div class="brand-header">
+            <a href="https://www.thebetterveteran.com/" class="home-btn" target="_blank" rel="noopener noreferrer">Home</a>
+            <span class="brand-name">
+                <span class="brand-the">The </span>
+                <span class="brand-better">Better </span>
+                <span class="brand-veteran">Veteran</span>
+            </span>
+        </div>
+        <h1>Military-to-Civilian Salary Translator</h1>
+        <p class="tool-subtitle">What civilian salary do you actually need to match your military pay?</p>
+    </div>
+
+    <!-- Calculator Inputs -->
+    <div id="calculator-container">
+        <!-- Group 1: Your Service -->
+        <div class="input-group-wrapper">
+            <button class="input-group-toggle" aria-expanded="true" data-target="group-service">
+                <h2>Your Service</h2>
+                <span class="toggle-indicator">&#9660;</span>
+            </button>
+            <div class="input-group" id="group-service">
+                <label for="grade-select">Pay Grade:</label>
+                <select id="grade-select"></select>
+
+                <label for="yos-select">Years of Service:</label>
+                <select id="yos-select"></select>
+
+                <label for="branch-select">Branch:</label>
+                <select id="branch-select">
+                    <option value="army">Army</option>
+                    <option value="navy">Navy</option>
+                    <option value="airforce">Air Force</option>
+                    <option value="marines">Marine Corps</option>
+                    <option value="coastguard">Coast Guard</option>
+                    <option value="spaceforce">Space Force</option>
+                </select>
+
+                <label for="special-pay">Special & Incentive Pay (monthly):</label>
+                <input type="number" id="special-pay" placeholder="e.g. 375" min="0" max="10000" step="25" value="0">
+                <p class="input-hint">Total monthly special/incentive pays: jump pay ($150), dive pay ($240), flight pay, SDAP, demo pay, hazardous duty pay, foreign language proficiency pay, etc. Add them up and enter the total.</p>
+
+                <label for="tsp-select">Your TSP Contribution:</label>
+                <select id="tsp-select">
+                    <option value="0">0% (DoD auto-contributes 1%)</option>
+                    <option value="1">1%</option>
+                    <option value="2">2%</option>
+                    <option value="3">3%</option>
+                    <option value="4">4%</option>
+                    <option value="5" selected>5% or more (max match)</option>
+                </select>
+                <p class="input-hint">Under the Blended Retirement System, DoD auto-contributes 1% and matches up to 4% more. Contributing 5%+ gets the full match.</p>
+            </div>
+        </div>
+
+        <!-- Group 2: Your Location -->
+        <div class="input-group-wrapper">
+            <button class="input-group-toggle" aria-expanded="true" data-target="group-location">
+                <h2>Your Location</h2>
+                <span class="toggle-indicator">&#9660;</span>
+            </button>
+            <div class="input-group" id="group-location">
+                <div class="checkbox-row">
+                    <input type="checkbox" id="bah-toggle" checked>
+                    <label for="bah-toggle" class="checkbox-label">I receive BAH</label>
+                </div>
+                <p class="input-hint">Uncheck if you live in barracks/on-post housing and don't receive BAH (common for single junior enlisted).</p>
+
+                <div id="bah-options">
+                    <label for="zip-input">Duty Station Zip Code:</label>
+                    <input type="text" id="zip-input" placeholder="e.g. 78234" maxlength="5" inputmode="numeric" pattern="[0-9]{5}" value="78234">
+                    <p class="input-hint" id="zip-status">Enter your duty station zip code for BAH rates. <a href="https://www.travel.dod.mil/Allowances/Basic-Allowance-for-Housing/BAH-Rate-Lookup/" target="_blank" rel="noopener noreferrer">Verify exact rates at DTMO</a></p>
+
+                    <label for="dependents-select">Dependents (for BAH):</label>
+                    <select id="dependents-select">
+                        <option value="yes" selected>With Dependents</option>
+                        <option value="no">Without Dependents</option>
+                    </select>
+                </div>
+
+                <div class="checkbox-row">
+                    <input type="checkbox" id="bas-toggle" checked>
+                    <label for="bas-toggle" class="checkbox-label">I receive BAS</label>
+                </div>
+                <p class="input-hint">Uncheck if you eat at the DFAC (meal deductions taken from pay). Most service members receive BAS.</p>
+
+                <label for="marital-status-select">Filing Status:</label>
+                <select id="marital-status-select">
+                    <option value="married" selected>Married Filing Jointly</option>
+                    <option value="single">Single</option>
+                </select>
+
+                <label for="state-select">Civilian State (for tax comparison):</label>
+                <select id="state-select"></select>
+                <p class="input-hint">Where you plan to live after separating — determines state income tax in the civilian calculation.</p>
+            </div>
+        </div>
+
+        <!-- Group 3: Compare -->
+        <div class="input-group-wrapper">
+            <button class="input-group-toggle" aria-expanded="true" data-target="group-compare">
+                <h2>Compare (Optional)</h2>
+                <span class="toggle-indicator">&#9660;</span>
+            </button>
+            <div class="input-group" id="group-compare">
+                <p class="input-hint" style="margin-bottom: 4px;">Have a job offer? Enter it to see how it really stacks up against your military pay.</p>
+                <label for="civilian-offer">Civilian Salary Offer (annual):</label>
+                <input type="number" id="civilian-offer" placeholder="e.g. 85000" min="0" max="500000" step="1000">
+
+                <label for="va-rating-select">VA Disability Rating (post-separation):</label>
+                <select id="va-rating-select">
+                    <option value="0" selected>None / 0%</option>
+                    <option value="10">10%</option>
+                    <option value="20">20%</option>
+                    <option value="30">30%</option>
+                    <option value="40">40%</option>
+                    <option value="50">50%</option>
+                    <option value="60">60%</option>
+                    <option value="70">70%</option>
+                    <option value="80">80%</option>
+                    <option value="90">90%</option>
+                    <option value="100">100%</option>
+                </select>
+                <p class="input-hint">If you have or expect a VA disability rating, your tax-free VA comp reduces the civilian salary you need.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results (shown after calculate) -->
+    <div id="results-section">
+
+        <!-- Section 1: Hero — Your Military Pay Is Worth -->
+        <div class="section-container hero-section">
+            <h2>Your Military Pay Is Worth More Than You Think</h2>
+            <div class="view-toggle">
+                <button class="view-btn active" data-view="monthly" id="view-monthly">Monthly</button>
+                <button class="view-btn" data-view="annual" id="view-annual">Annual</button>
+            </div>
+            <div id="hero-card"></div>
+        </div>
+
+        <!-- Section 2: Military Compensation Breakdown -->
+        <div class="section-container">
+            <h2>Your Military Compensation Breakdown</h2>
+            <p class="section-subtitle">Everything that makes up your total pay — most of it tax-free.</p>
+            <div id="military-breakdown-grid" class="benefit-grid"></div>
+            <p class="section-footnote">Deployed to a combat zone? Your tax savings may be even higher. Enlisted and warrant officers can exclude <strong>all</strong> pay from federal taxes; officers are capped at the senior E-9 rate. <a href="https://www.irs.gov/individuals/military/tax-exclusion-for-combat-service" target="_blank" rel="noopener noreferrer">IRS combat zone exclusion</a> · <a href="https://militarypay.defense.gov/Pay/Tax-Information/CZTE/" target="_blank" rel="noopener noreferrer">DoD CZTE info</a></p>
+        </div>
+
+        <!-- Section 3: Equivalent Civilian Salary -->
+        <div class="section-container">
+            <h2>What You'd Need to Earn as a Civilian</h2>
+            <p class="section-subtitle">The gross salary required to match your military take-home after taxes, health insurance, and retirement.</p>
+            <div id="equivalent-salary-section"></div>
+        </div>
+
+        <!-- Section 4: Gap Analysis (conditional) -->
+        <div class="section-container" id="gap-section" style="display:none;">
+            <h2>How Your Offer Stacks Up</h2>
+            <div id="gap-content"></div>
+        </div>
+
+        <!-- Section 5: Post-Separation Stack (conditional) -->
+        <div class="section-container" id="post-sep-section" style="display:none;">
+            <h2>Your Post-Separation Income Stack</h2>
+            <p class="section-subtitle">VA disability compensation is tax-free — it changes the math.</p>
+            <div id="post-sep-content"></div>
+        </div>
+
+        <!-- Section 6: Chart -->
+        <div class="section-container">
+            <h2>Side-by-Side Comparison</h2>
+            <div style="max-width: 700px; margin: 0 auto;">
+                <canvas id="comp-chart"></canvas>
+            </div>
+            <p class="section-footnote">The military bar shows each component of your total compensation. "Tax Savings on Allowances" is the extra taxes you'd owe if BAH and BAS were taxable — but they're not, so that's money you keep on top of the allowances themselves. The civilian bar is the gross salary needed to match your military take-home after federal/state taxes, FICA, health insurance, and retirement contributions.</p>
+        </div>
+
+        <!-- Section 7: Bottom Line Summary -->
+        <div class="section-container" id="summary-section">
+            <h2>The Bottom Line</h2>
+            <div id="summary-content"></div>
+        </div>
+
+    </div>
+
+    <!-- Subscribe -->
+    <div id="subscribe-container">
+        <h2>Stay Informed — Subscribe to The Better Veteran</h2>
+        <p class="subscribe-subtext">Get weekly insights on optimizing your benefits — disability, healthcare, education, home loans, and more.</p>
+        <div class="subscribe-embed">
+            <script async src="https://subscribe-forms.beehiiv.com/embed.js"></script>
+            <iframe
+                src="https://subscribe-forms.beehiiv.com/49570ada-448b-4e52-b2e1-ae56aedb1ee2"
+                class="beehiiv-embed"
+                data-test-id="beehiiv-embed"
+                frameborder="0"
+                scrolling="no"
+                style="width: 652px; height: 202px; margin: 0; border-radius: 10px; background-color: transparent; box-shadow: 0 0 #0000; max-width: 100%;">
+            </iframe>
+        </div>
+    </div>
+
+    <!-- Print / Share -->
+    <div class="action-bar no-print">
+        <button id="print-btn" class="action-btn">Print My Results</button>
+        <button id="share-btn" class="action-btn action-btn-secondary">Copy Link to Share</button>
+    </div>
+
+    <div class="more-tools">
+        <h3>More Free Veteran Tools</h3>
+        <div class="tools-links">
+            <a href="/100-pt/">P&T Benefits Calculator</a>
+            <a href="/va-loan/">VA Loan Calculator</a>
+            <a href="/mba/">MBA Comparison Tool</a>
+            <a href="https://www.thebetterveteran.com/" target="_blank" rel="noopener noreferrer">The Better Veteran Newsletter</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>
+            This translator provides estimates based on 2026 military pay tables (3.8% raise effective Jan 1, 2026),
+            2026 BAH rates (4.2% average increase), BAS rates, federal/state tax brackets, and civilian health insurance costs.
+            Actual compensation depends on your specific situation. BAH rates shown are representative for the selected installation —
+            verify exact rates at <a href="https://www.travel.dod.mil/Allowances/Basic-Allowance-for-Housing/BAH-Rate-Lookup/" target="_blank" rel="noopener noreferrer">DTMO</a>.
+            TSP match is calculated based on your selected contribution rate under the Blended Retirement System.
+        </p>
+        <p class="footer-sources">
+            Sources: DFAS 2026 Military Pay Tables, DTMO 2026 BAH Rates, IRS 2026 Tax Brackets,
+            Tax Foundation State Tax Data, KFF 2025 Employer Health Benefits Survey, TSP.gov.
+        </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="script.js"></script>
+</body>
+</html>
