@@ -685,6 +685,7 @@ function renderSummary(milComp, equivSal, gap, vaCompAnnual, civOffer) {
         <div class="summary-cta">
             <p>${ctaText}</p>
         </div>
+        <p class="section-footnote" style="margin-top:12px;">Retiring after 20+ years? Your military pension further reduces the civilian salary you need. <a href="https://www.dfas.mil/RetiredMilitary/plan/estimate/" target="_blank" rel="noopener noreferrer">Estimate your pension at DFAS</a>.</p>
     `;
 }
 
