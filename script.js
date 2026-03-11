@@ -198,7 +198,7 @@ function attachListeners() {
             const res = await fetch('/api/email-results', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, resultsUrl: buildShareUrl() }),
+                body: JSON.stringify({ email, resultsUrl: buildShareUrl(), source: 'salary-translator' }),
             });
             const data = await res.json();
 
