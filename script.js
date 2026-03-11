@@ -24,6 +24,11 @@ const viewAnnualBtn = document.getElementById('view-annual');
 const resultsSection = document.getElementById('results-section');
 const printBtn = document.getElementById('print-btn');
 const shareBtn = document.getElementById('share-btn');
+const emailResultsContainer = document.getElementById('email-results-container');
+const emailResultsForm = document.getElementById('email-results-form');
+const emailInput = document.getElementById('email-input');
+const emailSubmitBtn = document.getElementById('email-submit-btn');
+const emailStatus = document.getElementById('email-status');
 
 let compChart = null;
 let currentView = 'monthly';
@@ -177,6 +182,41 @@ function attachListeners() {
     shareBtn.addEventListener('click', () => {
         navigator.clipboard.writeText(buildShareUrl())
             .then(() => { shareBtn.textContent = 'Link Copied!'; setTimeout(() => { shareBtn.textContent = 'Copy Link to Share'; }, 2000); });
+    });
+
+    emailResultsForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = emailInput.value.trim();
+        if (!email) return;
+
+        emailSubmitBtn.disabled = true;
+        emailSubmitBtn.textContent = 'Sending...';
+        emailStatus.textContent = '';
+        emailStatus.className = 'email-status';
+
+        try {
+            const res = await fetch('/.netlify/functions/email-results', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, resultsUrl: buildShareUrl() }),
+            });
+            const data = await res.json();
+
+            if (res.ok) {
+                emailStatus.textContent = 'Check your inbox — your results link is on the way.';
+                emailStatus.classList.add('email-success');
+                emailInput.value = '';
+            } else {
+                emailStatus.textContent = data.error || 'Something went wrong. Please try again.';
+                emailStatus.classList.add('email-error');
+            }
+        } catch {
+            emailStatus.textContent = 'Network error. Please check your connection and try again.';
+            emailStatus.classList.add('email-error');
+        }
+
+        emailSubmitBtn.disabled = false;
+        emailSubmitBtn.textContent = 'Send My Results';
     });
 
     document.querySelectorAll('.input-group-toggle').forEach(btn => {
@@ -373,6 +413,7 @@ function calculate() {
     renderSummary(milComp, equivSal, gap, vaCompAnnual, civOffer);
 
     resultsSection.style.display = 'block';
+    emailResultsContainer.style.display = 'block';
 }
 
 function rerenderView() {

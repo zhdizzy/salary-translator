@@ -273,6 +273,33 @@ select:focus, input[type="number"]:focus, input[type="text"]:focus {
 .summary-cta p { margin: 0; font-size: 0.92em; line-height: 1.5; }
 .summary-cta strong { font-size: 1.1em; }
 
+/* --- Email Results Form --- */
+#email-results-container {
+    background: linear-gradient(135deg, var(--bg-surface) 0%, rgba(26, 54, 93, 0.15) 100%);
+    border: 1px solid var(--primary);
+    text-align: center;
+}
+.email-form-row {
+    display: flex; gap: 10px; justify-content: center;
+    max-width: 480px; margin: 0 auto;
+}
+.email-form-row input[type="email"] {
+    flex: 1; padding: 12px 16px; border: 2px solid rgba(255,255,255,0.15);
+    border-radius: var(--radius-sm); background: var(--bg-card);
+    color: var(--text-primary); font-size: 0.95em;
+}
+.email-form-row input[type="email"]:focus {
+    outline: none; border-color: var(--accent);
+}
+.email-form-row button {
+    white-space: nowrap;
+}
+.email-status {
+    margin-top: 10px; font-size: 0.9em; min-height: 1.4em;
+}
+.email-status.email-success { color: var(--success); font-weight: 600; }
+.email-status.email-error { color: var(--accent); font-weight: 600; }
+
 /* --- Subscribe Section --- */
 #subscribe-container {
     background-color: var(--bg-surface); color: var(--text-primary);
@@ -318,12 +345,14 @@ footer a { color: var(--primary-light); text-decoration: underline; }
     .view-toggle { flex-wrap: wrap; }
     .gap-card .gap-amount { font-size: 1.8em; }
     .salary-math-row { padding: 8px 14px; font-size: 0.82em; }
+    .email-form-row { flex-direction: column; }
+    .email-form-row button { width: 100%; }
 }
 
 /* --- Print --- */
 @media print {
     body { padding: 0; background: white; }
-    .no-print, .action-bar, #subscribe-container, .input-group-toggle .toggle-indicator,
+    .no-print, .action-bar, #subscribe-container, #email-results-container, .input-group-toggle .toggle-indicator,
     .view-toggle { display: none !important; }
     .section-container { box-shadow: none; border: 1px solid #ddd; break-inside: avoid; page-break-inside: avoid; }
     #calculator-container { display: none; }
